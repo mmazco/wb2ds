@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { apps } from "./data/apps";
 import { TabType, Category } from "./types";
 import ScatterChart from "./components/ScatterChart";
@@ -13,7 +13,7 @@ const tabs: TabType[] = [
   "Gaming, Entertainment & Education",
   "Social & Identity Tools",
   "Commerce & Attention",
-  "Utility vs Rewards"
+  "World ID Utility vs Rewards"
 ];
 
 // External link icon
@@ -27,16 +27,28 @@ const ExternalIcon = () => (
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("All Apps");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [mounted, setMounted] = useState(false);
+
+  // Load saved theme on mount
+  useEffect(() => {
+    setMounted(true);
+    const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
   };
 
   const filteredApps = useMemo(() => {
-    if (activeTab === "All Apps" || activeTab === "Utility vs Rewards") {
+    if (activeTab === "All Apps" || activeTab === "World ID Utility vs Rewards") {
       return apps;
     }
     return apps.filter(app => app.category === activeTab);
@@ -70,7 +82,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="main-container">
-        {activeTab === "Utility vs Rewards" ? (
+        {activeTab === "World ID Utility vs Rewards" ? (
           <ScatterChart apps={apps} onOpenModal={() => setIsModalOpen(true)} theme={theme} />
         ) : (
           <>
@@ -123,7 +135,7 @@ export default function Home() {
                   
                   <div className="scores">
                     <div className="score-item">
-                      <span className="score-label">Utility</span>
+                      <span className="score-label">World ID Utility</span>
                       <span className="score-value">{app.utilityScore}%</span>
                     </div>
                     <div className="score-item">

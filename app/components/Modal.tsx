@@ -76,7 +76,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
           justifyContent: "space-between",
         }}>
           <h2 style={{ fontSize: "22px", fontWeight: 600, color: "#1a1a1a", margin: 0 }}>
-            Understanding the Utility vs Rewards Matrix
+            Understanding World ID Utility and Rewards
           </h2>
           <button
             onClick={onClose}
@@ -102,18 +102,16 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
             <h3 style={{ fontSize: "16px", fontWeight: 600, color: "#1a1a1a", marginBottom: "12px" }}>
               What This Chart Shows
             </h3>
-            <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, margin: 0 }}>
-              This matrix maps every World Build app based on two critical dimensions: how much real utility 
-              they provide, and how dependent they are on token rewards to drive user behavior.
+            <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, marginBottom: "12px" }}>
+              <strong style={{ color: "#1a1a1a" }}>Core thesis:</strong> This matrix roughly maps every World Build app based on two critical dimensions: how much World ID utility they provide, and how dependent they are on token rewards to drive user engagement. Since Mini Apps are providing returning users to World Wallet App beyond just claiming WLD, this thesis piggy backs off of that realisation and questions if token rewards or if little to none financial rewards is provided, would users still come back? as the ultimate test to gauge what apps will drive long term retention.
+            </p>
+            <p style={{ fontSize: "13px", color: "#888", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
+              Note: the mapping and thesis are assumptions based on World ecosystem observation and data on user behaviour, and the type of products/ideas presented during demo day in Buenos Aires for WB2.
             </p>
           </section>
 
-          {/* The Axes Explained */}
+          {/* The Axes */}
           <section style={{ marginBottom: "24px" }}>
-            <h3 style={{ fontSize: "16px", fontWeight: 600, color: "#1a1a1a", marginBottom: "12px" }}>
-              The Axes Explained
-            </h3>
-            
             <div style={{
               backgroundColor: "#f9f9f9",
               border: "1px solid #e5e5e5",
@@ -122,11 +120,10 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
               marginBottom: "12px",
             }}>
               <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#1a1a1a", marginBottom: "8px" }}>
-                X-Axis: Utility Score (0-100%)
+                Y-Axis: World ID Utilization (Low → High)
               </h4>
               <p style={{ fontSize: "13px", color: "#666", lineHeight: 1.5, margin: 0 }}>
-                How much real-world value does the app provide WITHOUT token rewards? Apps on the right solve 
-                actual problems (lending, commerce, identity). Apps on the left only work if you pay users to engage.
+                How deeply does the app leverage World ID&apos;s proof of personhood? Apps at the top use sybil resistance as their core moat. Apps at the bottom could exist on any platform.
               </p>
             </div>
             
@@ -137,112 +134,76 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
               padding: "16px",
             }}>
               <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#1a1a1a", marginBottom: "8px" }}>
-                Y-Axis: Rewards Dependency (0-100%)
+                X-Axis: Rewards Dependence (Low → High)
               </h4>
               <p style={{ fontSize: "13px", color: "#666", lineHeight: 1.5, margin: 0 }}>
-                How dependent is the app on token incentives to drive behavior? Apps at the top are "earn-to-engage" 
-                models requiring constant rewards. Apps at the bottom have organic usage patterns.
+                How much does the app rely on token or rewards incentives to drive engagement?
               </p>
             </div>
           </section>
 
-          {/* The Four Quadrants */}
+          {/* Why World ID Matters for Retention */}
           <section style={{ marginBottom: "24px" }}>
             <h3 style={{ fontSize: "16px", fontWeight: 600, color: "#1a1a1a", marginBottom: "12px" }}>
-              The Four Quadrants
+              Why World ID Matters for Retention
             </h3>
-            
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-              <div style={{
-                backgroundColor: "#f9f9f9",
-                border: "1px solid #e5e5e5",
-                borderLeft: "3px solid #10b981",
-                borderRadius: "8px",
-                padding: "16px",
-              }}>
-                <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#10b981", marginBottom: "8px" }}>
-                  Bottom-Right: Sustainable
-                </h4>
-                <p style={{ fontSize: "12px", color: "#666", lineHeight: 1.5, margin: 0 }}>
-                  High utility, low rewards dependency. These apps solve real problems and users come for 
-                  the utility, not tokens. Most likely to succeed long-term.
-                </p>
-              </div>
-              
-              <div style={{
-                backgroundColor: "#f9f9f9",
-                border: "1px solid #e5e5e5",
-                borderLeft: "3px solid #ef4444",
-                borderRadius: "8px",
-                padding: "16px",
-              }}>
-                <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#ef4444", marginBottom: "8px" }}>
-                  Top-Left: Danger Zone
-                </h4>
-                <p style={{ fontSize: "12px", color: "#666", lineHeight: 1.5, margin: 0 }}>
-                  Low utility, high rewards dependency. Token farming apps with no real value proposition. 
-                  Will die when rewards dry up.
-                </p>
-              </div>
-              
-              <div style={{
-                backgroundColor: "#f9f9f9",
-                border: "1px solid #e5e5e5",
-                borderLeft: "3px solid #f59e0b",
-                borderRadius: "8px",
-                padding: "16px",
-              }}>
-                <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#f59e0b", marginBottom: "8px" }}>
-                  Top-Right: Hybrid Model
-                </h4>
-                <p style={{ fontSize: "12px", color: "#666", lineHeight: 1.5, margin: 0 }}>
-                  High utility AND high rewards. Using tokens to bootstrap a genuinely useful product. Can 
-                  work if they convert paid attention to organic behavior.
-                </p>
-              </div>
-              
-              <div style={{
-                backgroundColor: "#f9f9f9",
-                border: "1px solid #e5e5e5",
-                borderRadius: "8px",
-                padding: "16px",
-              }}>
-                <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#888", marginBottom: "8px" }}>
-                  Bottom-Left: Rare
-                </h4>
-                <p style={{ fontSize: "12px", color: "#666", lineHeight: 1.5, margin: 0 }}>
-                  Low utility, low rewards. These don&apos;t really exist - without utility OR rewards, 
-                  there&apos;s no reason to use the app.
-                </p>
-              </div>
-            </div>
+            <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, marginBottom: "12px" }}>
+              <strong style={{ color: "#1a1a1a" }}>The retention hypothesis:</strong> Apps that deeply integrate World ID create sustainable moats that transcend token rewards. Here&apos;s why:
+            </p>
+            <ul style={{ fontSize: "13px", color: "#666", lineHeight: 1.7, margin: 0, paddingLeft: "20px" }}>
+              <li style={{ marginBottom: "8px" }}><strong style={{ color: "#1a1a1a" }}>Sybil resistance enables new markets:</strong> Verified human attention (MADS), trust-based lending (Rick), and geo-verified polling (Ground Truth) are only viable with proof of personhood.</li>
+              <li style={{ marginBottom: "8px" }}><strong style={{ color: "#1a1a1a" }}>Quality over quantity:</strong> One verified human is worth 1000 bot accounts. Apps leveraging this insight can charge premium prices and deliver superior value.</li>
+              <li style={{ marginBottom: "8px" }}><strong style={{ color: "#1a1a1a" }}>Network effects multiply:</strong> When every user is a verified unique human, the network becomes exponentially more valuable (fraud-proof marketplaces, real community governance, accurate sentiment data).</li>
+              <li><strong style={{ color: "#1a1a1a" }}>Beyond token incentives:</strong> While rewards attract users initially, World ID integration creates structural advantages that persist even as rewards decrease.</li>
+            </ul>
           </section>
 
-          {/* The Key Question */}
+          {/* Use Cases That Drive World ID Adoption */}
           <section style={{ marginBottom: "24px" }}>
             <h3 style={{ fontSize: "16px", fontWeight: 600, color: "#1a1a1a", marginBottom: "12px" }}>
-              The Key Question
+              Use Cases That Drive World ID Adoption
             </h3>
-            <p style={{ fontSize: "14px", color: "#1a1a1a", fontWeight: 500, marginBottom: "8px" }}>
-              If token rewards went to zero tomorrow, would users still come back?
+            <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, marginBottom: "12px" }}>
+              Based on proof-of-human business applications, World ID solves critical problems:
             </p>
-            <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, margin: 0 }}>
-              This is the ultimate test. Apps in the bottom-right pass this test. Apps in the top-left fail 
-              spectacularly. The challenge for hybrid models is converting paid attention into lasting habits.
-            </p>
+            <ul style={{ fontSize: "13px", color: "#666", lineHeight: 1.7, margin: 0, paddingLeft: "20px" }}>
+              <li style={{ marginBottom: "8px" }}><strong style={{ color: "#1a1a1a" }}>Fraud prevention:</strong> No bot farms, no multi-accounting, no identity theft (Human Labs, MADS, Rick)</li>
+              <li style={{ marginBottom: "8px" }}><strong style={{ color: "#1a1a1a" }}>Fair distribution:</strong> Airdrops, rewards, and voting that can&apos;t be gamed (Ground Truth, TBD)</li>
+              <li style={{ marginBottom: "8px" }}><strong style={{ color: "#1a1a1a" }}>Verified data:</strong> Real human sentiment, preferences, and behavior data worth premium prices (Valor, Fram3s, Ground Truth)</li>
+              <li><strong style={{ color: "#1a1a1a" }}>Trust-based transactions:</strong> Enable P2P lending, reputation systems, and community governance (Rick, Innermost, PumPool)</li>
+            </ul>
           </section>
 
-          {/* What This Means for Demo Day */}
+          {/* The Strategic Question */}
           <section>
             <h3 style={{ fontSize: "16px", fontWeight: 600, color: "#1a1a1a", marginBottom: "12px" }}>
-              What This Means for Demo Day
+              The Strategic Question
             </h3>
-            <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, margin: 0 }}>
-              Investors are looking for apps in the <span style={{ fontWeight: 600, color: "#10b981" }}>bottom-right quadrant</span> - 
-              sustainable utility with token rewards as an accelerant, not a crutch. If your app is in the top-left, 
-              you need to articulate a clear path to building real utility.
+            <p style={{ fontSize: "14px", color: "#1a1a1a", fontWeight: 500, marginBottom: "12px" }}>
+              Does your app actually need World ID?
             </p>
+            <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, marginBottom: "12px" }}>
+              Apps in the top half of this chart have answered &quot;yes&quot; - they&apos;ve identified use cases where proof of personhood creates genuine competitive advantages. These are the apps most likely to:
+            </p>
+            <ul style={{ fontSize: "13px", color: "#666", lineHeight: 1.7, margin: 0, paddingLeft: "20px" }}>
+              <li style={{ marginBottom: "8px" }}>Sustain growth as token rewards normalize</li>
+              <li style={{ marginBottom: "8px" }}>Command premium pricing from users or businesses</li>
+              <li style={{ marginBottom: "8px" }}>Build defensible moats competitors can&apos;t replicate</li>
+              <li>Justify World&apos;s investment in building proof-of-human infrastructure</li>
+            </ul>
           </section>
+
+          {/* Disclaimer */}
+          <div style={{ 
+            marginTop: "24px", 
+            paddingTop: "16px", 
+            borderTop: "1px solid #e5e5e5",
+          }}>
+            <p style={{ fontSize: "12px", color: "#888", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>
+              Disclaimer: The above thesis and assumptions is made by builder and mentor @mmazco and not expressed by an official member of TFH or World Foundation.
+            </p>
+          </div>
+
         </div>
       </div>
     </div>

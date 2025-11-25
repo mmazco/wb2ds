@@ -93,7 +93,7 @@ export default function AppCard({ app }: AppCardProps) {
       <div className="flex gap-6">
         <div>
           <div className="text-[10px] text-muted uppercase mb-0.5">
-            Utility
+            World ID Utility
           </div>
           <div className="text-base font-bold text-foreground">
             {app.utilityScore}%

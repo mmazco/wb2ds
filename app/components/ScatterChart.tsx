@@ -1,30 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartOptions,
-} from "chart.js";
-import { Scatter } from "react-chartjs-2";
+import { useEffect, useState, useRef } from "react";
 import { App, Category } from "../types";
 import { useIsMobile } from "../hooks/useMediaQuery";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 interface ScatterChartProps {
   apps: App[];
@@ -41,146 +19,45 @@ const categoryColors: Record<Category, string> = {
   "Commerce & Attention": "#8b5cf6", // purple
 };
 
+interface TooltipData {
+  x: number;
+  y: number;
+  name: string;
+  worldID: number;
+  rewards: number;
+  color: string;
+}
+
 export default function ScatterChart({ apps, onOpenModal, theme }: ScatterChartProps) {
   const isMobile = useIsMobile();
-  const [chartKey, setChartKey] = useState(0);
-
-  // Force re-render when theme changes
-  useEffect(() => {
-    setChartKey(prev => prev + 1);
-  }, [theme]);
-
+  const [tooltip, setTooltip] = useState<TooltipData | null>(null);
+  const [hoveredApp, setHoveredApp] = useState<string | null>(null);
+  
+  const chartWidth = isMobile ? 350 : 800;
+  const chartHeight = isMobile ? 400 : 600;
+  const padding = isMobile ? 60 : 100;
+  const innerWidth = chartWidth - padding * 2;
+  const innerHeight = chartHeight - padding * 2;
+  
+  const isDark = theme === "dark";
+  const textColor = isDark ? "#888" : "#333";
+  const lineColor = isDark ? "#333" : "#ddd";
+  const labelColor = isDark ? "#e5e5e5" : "#1a1a1a";
+  
+  // Scale functions
+  // X-axis: rewards (low on left, high on right)
+  const scaleX = (rewards: number) => padding + (rewards / 100) * innerWidth;
+  // Y-axis: World ID (high on top, low on bottom)
+  const scaleY = (worldID: number) => chartHeight - padding - (worldID / 100) * innerHeight;
+  
+  // Get unique categories for legend
   const categories = Array.from(new Set(apps.map(app => app.category)));
-
-  const datasets = categories.map(category => {
-    const categoryApps = apps.filter(app => app.category === category);
-    return {
-      label: category,
-      data: categoryApps.map(app => ({
-        x: app.utilityScore,
-        y: app.rewardsScore,
-        label: app.name,
-      })),
-      backgroundColor: categoryColors[category],
-      borderColor: categoryColors[category],
-      pointRadius: isMobile ? 5 : 6,
-      pointHoverRadius: isMobile ? 8 : 10,
-      pointBorderWidth: 0,
-    };
-  });
-
-  const gridColor = theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "#e5e5e5";
-  const axisColor = theme === "dark" ? "rgba(255, 255, 255, 0.4)" : "#999";
-  const textColor = theme === "dark" ? "#ffffff" : "#666";
-  const labelColor = theme === "dark" ? "#ffffff" : "#333";
-
-  const options: ChartOptions<"scatter"> = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        type: "linear",
-        min: 0,
-        max: 100,
-        border: {
-          color: axisColor,
-        },
-        title: {
-          display: true,
-          text: "Utility Score",
-          color: labelColor,
-          font: {
-            size: isMobile ? 12 : 14,
-            weight: 600,
-          },
-        },
-        grid: {
-          color: gridColor,
-        },
-        ticks: {
-          color: textColor,
-          font: {
-            size: isMobile ? 10 : 12,
-          },
-          callback: function(value) {
-            return value + "%";
-          },
-        },
-      },
-      y: {
-        type: "linear",
-        min: 0,
-        max: 100,
-        border: {
-          color: axisColor,
-        },
-        title: {
-          display: true,
-          text: "Rewards Dependency",
-          color: labelColor,
-          font: {
-            size: isMobile ? 12 : 14,
-            weight: 600,
-          },
-        },
-        grid: {
-          color: gridColor,
-        },
-        ticks: {
-          color: textColor,
-          font: {
-            size: isMobile ? 10 : 12,
-          },
-          callback: function(value) {
-            return value + "%";
-          },
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: true,
-        position: "bottom" as const,
-        labels: {
-          color: labelColor,
-          font: {
-            size: isMobile ? 10 : 12,
-          },
-          padding: isMobile ? 10 : 15,
-          usePointStyle: true,
-          pointStyle: "circle",
-        },
-      },
-      tooltip: {
-        backgroundColor: theme === "dark" ? "#141414" : "#ffffff",
-        titleColor: theme === "dark" ? "#e5e5e5" : "#1a1a1a",
-        bodyColor: theme === "dark" ? "#e5e5e5" : "#1a1a1a",
-        borderColor: theme === "dark" ? "#1f1f1f" : "#e5e5e5",
-        borderWidth: 1,
-        padding: 12,
-        displayColors: true,
-        callbacks: {
-          title: function(context) {
-            const dataPoint = context[0].raw as { label: string };
-            return dataPoint.label;
-          },
-          label: function(context) {
-            const dataPoint = context.raw as { x: number; y: number };
-            return [
-              `Utility: ${dataPoint.x}%`,
-              `Rewards: ${dataPoint.y}%`
-            ];
-          },
-        },
-      },
-    },
-  };
 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl md:text-2xl font-bold text-foreground">
-          Utility vs Rewards Matrix
+          World ID Utilization vs Rewards
         </h2>
         <button
           onClick={onOpenModal}
@@ -190,12 +67,191 @@ export default function ScatterChart({ apps, onOpenModal, theme }: ScatterChartP
         </button>
       </div>
       
-      <div style={{ padding: "20px 0" }}>
-        <div style={{ height: isMobile ? "400px" : "600px" }}>
-          <Scatter key={chartKey} options={options} data={{ datasets }} />
-        </div>
+      {/* Chart */}
+      <div 
+        className="flex justify-center items-center rounded-lg p-4 md:p-10"
+        style={{ 
+          backgroundColor: isDark ? "#141414" : "#ffffff",
+        }}
+      >
+        <svg 
+          width={chartWidth} 
+          height={chartHeight}
+          style={{ overflow: "visible" }}
+        >
+          {/* Vertical axis line (centered at 50% rewards) */}
+          <line
+            x1={scaleX(50)}
+            y1={padding - 20}
+            x2={scaleX(50)}
+            y2={chartHeight - padding + 20}
+            stroke={lineColor}
+            strokeWidth={1}
+          />
+          
+          {/* Horizontal axis line (centered at 50% World ID) */}
+          <line
+            x1={padding - 20}
+            y1={scaleY(50)}
+            x2={chartWidth - padding + 20}
+            y2={scaleY(50)}
+            stroke={lineColor}
+            strokeWidth={1}
+          />
+          
+          {/* Axis labels */}
+          {/* Top: High utilization of World ID */}
+          <text
+            x={chartWidth / 2}
+            y={isMobile ? 25 : 40}
+            textAnchor="middle"
+            fill={textColor}
+            fontSize={isMobile ? 11 : 14}
+            fontWeight={600}
+          >
+            High utilization of World ID
+          </text>
+          
+          {/* Bottom: Low utilization of World ID */}
+          <text
+            x={chartWidth / 2}
+            y={chartHeight - (isMobile ? 10 : 25)}
+            textAnchor="middle"
+            fill={textColor}
+            fontSize={isMobile ? 11 : 14}
+            fontWeight={600}
+          >
+            Low utilization of World ID
+          </text>
+          
+          {/* Left: Low rewards */}
+          <text
+            x={isMobile ? 15 : 40}
+            y={chartHeight / 2}
+            textAnchor="middle"
+            fill={textColor}
+            fontSize={isMobile ? 11 : 14}
+            fontWeight={600}
+            transform={`rotate(-90, ${isMobile ? 15 : 40}, ${chartHeight / 2})`}
+          >
+            Low rewards
+          </text>
+          
+          {/* Right: High rewards */}
+          <text
+            x={chartWidth - (isMobile ? 15 : 40)}
+            y={chartHeight / 2}
+            textAnchor="middle"
+            fill={textColor}
+            fontSize={isMobile ? 11 : 14}
+            fontWeight={600}
+            transform={`rotate(90, ${chartWidth - (isMobile ? 15 : 40)}, ${chartHeight / 2})`}
+          >
+            High rewards
+          </text>
+          
+          {/* Data points */}
+          {apps.map(app => {
+            const cx = scaleX(app.rewardsScore);
+            const cy = scaleY(app.utilityScore);
+            const color = categoryColors[app.category];
+            const isHovered = hoveredApp === app.name;
+            
+            return (
+              <g 
+                key={app.name}
+                style={{ cursor: "pointer" }}
+                onMouseEnter={() => {
+                  setHoveredApp(app.name);
+                  setTooltip({
+                    x: cx,
+                    y: cy,
+                    name: app.name,
+                    worldID: app.utilityScore,
+                    rewards: app.rewardsScore,
+                    color,
+                  });
+                }}
+                onMouseLeave={() => {
+                  setHoveredApp(null);
+                  setTooltip(null);
+                }}
+              >
+                {/* Circle */}
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={isHovered ? (isMobile ? 7 : 8) : (isMobile ? 5 : 6)}
+                  fill={color}
+                  stroke={isDark ? "#141414" : "#fff"}
+                  strokeWidth={2}
+                  style={{ transition: "r 0.15s ease" }}
+                />
+                
+                {/* Label */}
+                <text
+                  x={cx}
+                  y={cy - (isMobile ? 10 : 12)}
+                  textAnchor="middle"
+                  fill={isHovered ? labelColor : textColor}
+                  fontSize={isHovered ? (isMobile ? 11 : 13) : (isMobile ? 9 : 11)}
+                  fontWeight={isHovered ? 600 : 400}
+                  style={{ transition: "all 0.15s ease" }}
+                >
+                  {app.name}
+                </text>
+              </g>
+            );
+          })}
+          
+          {/* Tooltip */}
+          {tooltip && (
+            <g>
+              <rect
+                x={tooltip.x - 70}
+                y={tooltip.y + 15}
+                width={140}
+                height={44}
+                rx={6}
+                fill={isDark ? "#1f1f1f" : "#fff"}
+                stroke={tooltip.color}
+                strokeWidth={2}
+              />
+              <text
+                x={tooltip.x}
+                y={tooltip.y + 34}
+                textAnchor="middle"
+                fill={labelColor}
+                fontSize={12}
+              >
+                World ID: {tooltip.worldID}%
+              </text>
+              <text
+                x={tooltip.x}
+                y={tooltip.y + 50}
+                textAnchor="middle"
+                fill={labelColor}
+                fontSize={12}
+              >
+                Rewards: {tooltip.rewards}%
+              </text>
+            </g>
+          )}
+        </svg>
+      </div>
+      
+      {/* Legend */}
+      <div className="flex justify-center gap-5 md:gap-6 flex-wrap mt-16 md:mt-20">
+        {categories.map(category => (
+          <div key={category} className="flex items-center gap-2">
+            <div 
+              className="w-3 h-3 rounded-full" 
+              style={{ backgroundColor: categoryColors[category] }}
+            />
+            <span className="text-sm text-muted">{category}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
-

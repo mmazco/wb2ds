@@ -18,7 +18,7 @@ export interface App {
   team: string;
 }
 
-export type TabType = "All Apps" | Category | "Utility vs Rewards";
+export type TabType = "All Apps" | Category | "World ID Utility vs Rewards";
 
 export interface ChartDataPoint {
   x: number;

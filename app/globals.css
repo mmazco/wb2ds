@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #e5e5e5;
-  --card-bg: #141414;
-  --border: #1f1f1f;
-  --muted: #888888;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card-bg: #ffffff;
+  --border: #e5e5e5;
+  --muted: #666666;
   --accent: #7c3aed;
   --status: #10b981;
   --tag-bg: #fef2f2;
@@ -13,12 +13,12 @@
   --tag-text: #dc2626;
 }
 
-[data-theme="light"] {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
-  --card-bg: #ffffff;
-  --border: #e5e5e5;
-  --muted: #666666;
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #e5e5e5;
+  --card-bg: #141414;
+  --border: #1f1f1f;
+  --muted: #888888;
 }
 
 * {
@@ -79,11 +79,11 @@ body {
 }
 
 .theme-btn:hover {
-  background: #1f1f1f;
+  background: #f5f5f5;
 }
 
-[data-theme="light"] .theme-btn:hover {
-  background: #f5f5f5;
+[data-theme="dark"] .theme-btn:hover {
+  background: #1f1f1f;
 }
 
 /* Navigation Tabs */
