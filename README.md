@@ -87,17 +87,8 @@ app/
 
 The dashboard supports light and dark modes with automatic system preference detection. Theme preference is saved to localStorage and persists across sessions.
 
-## Deployment
-
-This project is ready to deploy on:
-- **Vercel** (recommended)
-- **Replit**
-- **Railway**
-- Any Node.js hosting platform
-
-No environment variables required - all data is static.
-
 ## License
 
 Built for WB2 BA Demo Day 11.15.2025
+
 # wb2ds
