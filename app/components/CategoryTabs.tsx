@@ -15,7 +15,7 @@ const tabs: TabType[] = [
   "Gaming, Entertainment & Education",
   "Social & Identity Tools",
   "Commerce & Attention",
-  "Utility vs Rewards"
+  "World ID Utility vs Rewards"
 ];
 
 export default function CategoryTabs({ activeTab, onTabChange, categoryCounts }: CategoryTabsProps) {
