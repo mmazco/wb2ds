@@ -146,15 +146,15 @@ body {
 }
 
 .section-count {
-  background: #1f1f1f;
+  background: #f5f5f5;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
   color: var(--muted);
 }
 
-[data-theme="light"] .section-count {
-  background: #f5f5f5;
+[data-theme="dark"] .section-count {
+  background: #1f1f1f;
 }
 
 /* Apps Grid */

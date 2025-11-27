@@ -183,7 +183,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
               Does your app actually need World ID?
             </p>
             <p style={{ fontSize: "14px", color: "#666", lineHeight: 1.6, marginBottom: "12px" }}>
-              Apps in the top half of this chart have answered &quot;yes&quot; - they&apos;ve identified use cases where proof of personhood creates genuine competitive advantages. These are the apps most likely to:
+              The assumption here is that apps in the top half of this chart have identified use cases where proof of personhood creates genuine competitive advantages. These apps could:
             </p>
             <ul style={{ fontSize: "13px", color: "#666", lineHeight: 1.7, margin: 0, paddingLeft: "20px" }}>
               <li style={{ marginBottom: "8px" }}>Sustain growth as token rewards normalize</li>
